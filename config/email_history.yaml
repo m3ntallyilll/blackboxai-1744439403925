@@ -1,0 +1,12 @@
+- timestamp: '2025-04-12T04:49:44'
+  action: auto_reply_sent
+  sender: test@example.com
+  details: Automated response sent for urgent inquiry
+- timestamp: '2025-04-12T04:45:00'
+  action: email_categorized
+  category: urgent
+  details: Email marked as urgent based on content analysis
+- timestamp: '2025-04-12T04:40:00'
+  action: error
+  error_message: Failed to connect to email server
+  details: Connection timeout while attempting to fetch emails
