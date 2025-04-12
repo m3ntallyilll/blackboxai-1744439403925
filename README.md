@@ -175,15 +175,10 @@ All errors are:
 
 ## Support
 
-For support:
-- Email: support@mailphantom.com
-- Discord: [Join our community](https://discord.gg/mailphantom)
-- Documentation: [docs.mailphantom.com](https://docs.mailphantom.com)
-
+coming soon!
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
+you must pay for a license from iLL-Ai
 ## Acknowledgments
 
 - Groq AI for providing the AI capabilities
