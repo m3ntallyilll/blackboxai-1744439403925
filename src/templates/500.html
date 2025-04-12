@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-[70vh] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full text-center">
+        <div class="flex justify-center">
+            <img class="h-16 w-auto" src="{{ url_for('static', filename='logo.png') }}" alt="MailPhantom">
+        </div>
+        
+        <div class="mt-8">
+            <div class="text-6xl font-bold text-indigo-600">500</div>
+            <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+                Server Error
+            </h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Oops! Something went wrong on our end. We're working to fix it.
+            </p>
+        </div>
+
+        <div class="mt-8 space-y-4">
+            <div>
+                <a href="{{ url_for('index') }}"
+                   class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <i class="fas fa-home mr-2"></i>
+                    Return to Dashboard
+                </a>
+            </div>
+            <div>
+                <button onclick="window.location.reload()"
+                        class="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <i class="fas fa-redo mr-2"></i>
+                    Try Again
+                </button>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <p class="text-sm text-gray-500">
+                If the problem persists, please <a href="mailto:support@mailphantom.com" class="font-medium text-indigo-600 hover:text-indigo-500">contact our support team</a>.
+            </p>
+            <p class="mt-2 text-xs text-gray-400">
+                Error ID: {{ error_id if error_id else 'Unknown' }}
+            </p>
+        </div>
+
+        {% if debug and error %}
+        <div class="mt-8 p-4 bg-red-50 rounded-lg">
+            <div class="text-left">
+                <h3 class="text-sm font-medium text-red-800">Debug Information:</h3>
+                <pre class="mt-2 text-xs text-red-700 overflow-x-auto">{{ error }}</pre>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
