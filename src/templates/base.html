@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MailPhantom - Smart Email Management</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-link {
+            @apply px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150;
+        }
+        .nav-link:hover {
+            @apply bg-indigo-700 text-white;
+        }
+        .nav-link.active {
+            @apply bg-indigo-800 text-white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-indigo-600 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img src="{{ url_for('static', filename='logo.png') }}" alt="MailPhantom" class="h-8 w-auto">
+                        <span class="text-white text-xl font-semibold ml-2">MailPhantom</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-4">
+                        <a href="{{ url_for('index') }}" 
+                           class="nav-link {% if request.endpoint == 'index' %}active{% else %}text-indigo-100{% endif %}">
+                            <i class="fas fa-inbox mr-2"></i> Dashboard
+                        </a>
+                        <a href="{{ url_for('settings') }}"
+                           class="nav-link {% if request.endpoint == 'settings' %}active{% else %}text-indigo-100{% endif %}">
+                            <i class="fas fa-cog mr-2"></i> Settings
+                        </a>
+                        <a href="{{ url_for('history') }}"
+                           class="nav-link {% if request.endpoint == 'history' %}active{% else %}text-indigo-100{% endif %}">
+                            <i class="fas fa-history mr-2"></i> History
+                        </a>
+                    </div>
+                </div>
+                {% if session.get('user_id') %}
+                <div class="flex items-center">
+                    <a href="{{ url_for('auth.logout') }}" 
+                       class="nav-link text-indigo-100 hover:bg-indigo-700">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="fixed top-4 right-4 z-50 w-96">
+                {% for category, message in messages %}
+                    <div class="rounded-lg shadow-lg mb-4 {% if category == 'error' %}bg-red-50 border-red-400{% elif category == 'warning' %}bg-yellow-50 border-yellow-400{% else %}bg-green-50 border-green-400{% endif %} border p-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                {% if category == 'error' %}
+                                    <i class="fas fa-exclamation-circle text-red-400"></i>
+                                {% elif category == 'warning' %}
+                                    <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                                {% else %}
+                                    <i class="fas fa-check-circle text-green-400"></i>
+                                {% endif %}
+                            </div>
+                            <div class="ml-3 flex-1">
+                                <p class="text-sm font-medium {% if category == 'error' %}text-red-800{% elif category == 'warning' %}text-yellow-800{% else %}text-green-800{% endif %}">
+                                    {{ message }}
+                                </p>
+                            </div>
+                            <div class="ml-4 flex-shrink-0 flex">
+                                <button type="button" 
+                                        class="bg-transparent rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none"
+                                        onclick="this.closest('.rounded-lg').remove()">
+                                    <span class="sr-only">Close</span>
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto py-6 sm:px-6 lg:px-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="text-gray-500 text-sm">
+                    MailPhantom &copy; {{ now.year }} | Powered by Groq AI
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-indigo-600">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>
